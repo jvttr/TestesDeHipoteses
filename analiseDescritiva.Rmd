@@ -12,22 +12,72 @@ Instruções para o uso do R Notebook:
 
 3. Para instalar um pacote utilize, por exemplo: install.packages("vcd")
 
-```{r}
-# Bibliotecas usadas para esta analise
 
+### Bibliotecas usadas para esta analise
+```{r}
+library(summarytools)
 library(vcd)
 ```
 
-```{r}
 ############################################################################
 ######################## TESTE DE HIPOTESES ################################
 ################### PARA DIFERENCA DE DUAS MEDIAS ##########################
 ############################################################################
 
-#Referencia: Anderson, et. al, Estatística Basica, 2010. Exercício 21 - Página. 411
+## Exercício 1
+
+### Referencia: Anderson, et. al, Estatística Basica, 2010. Exercício 21 - Página. 411
+
+EX_21: Uma empresa de pesquisa de mercado usou uma amostra de indivíduos para avaliar o potencial de compra de determinado produto antes e depois de as pessoas virem um novo comercial de televisão a respeito do produto. As avaliações do potencial de compra basearam-se em uma escala de 0 a 10, e os valores mais altos indicavam maior potencial de compra. A hipótese nula declarava que a avaliação média depois seria igual a avaliação média antes. A rejeição dessa hipótese demonstraria que o comercial melhorou a avaliação do potencial médio de compra. Use  α = 0,05 e os dados apresentados abaixo para testar a hipótese e comentar o valor do comercial.
+
+```{r}
 
 # Dados
 antes   <- c(5, 4, 7, 3, 5, 8, 5, 6)
 depois  <- c(6, 6, 7, 4, 3, 9, 7, 6)
+
 ```
 
+```{r}
+media_antes <- mean(antes)
+desv_antes <- sd(antes)
+
+media_depois <- mean(depois)
+desv_depois <- sd(depois)
+
+n_amostra <- length(antes)
+
+tabela <- data.frame(Exp = c("Antes","Depois"),Medias = c(media_antes,media_depois), Desvio_p = c(desv_antes,desv_depois))
+tabela
+```
+
+### Hipóteses
+
+    * Ho: media_antes = media_depois
+    * Ha: media_antes <> media_depois
+
+    Ho: As avaliações médias antes e depois do comercial são iguais;
+    Ha: As avaliações antes e depois do comercial são diferentes.
+
+### Estatística Teste
+    * Variância populacional desconhecida
+```{r}
+
+Fcal <- (desv_antes)^2/(desv_depois)^2
+Fcal
+
+```
+
+
+
+
+
+
+
+
+
+
+___________________
+## Exercício 2
+
+### Referência: Bussab & Morettin - Página 372 - Exercício 9
