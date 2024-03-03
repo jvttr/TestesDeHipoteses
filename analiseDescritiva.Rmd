@@ -1,0 +1,33 @@
+---
+title: "Exercícios de Testes de Hipóteses para a disciplina de Estatística II"
+output: html_notebook
+---
+O propósito deste trabalho é resolver alguns exercícios de Testes de Hipóteses propostos pela disciplina de Estatística II do curso de graduação em Estatística da Universidade Estatual de Maringá.
+
+Instruções para o uso do R Notebook:
+
+1. Tente executar este pedaço clicando no botão *Run* dentro do pedaço ou colocando o cursor dentro dele e pressionando *Ctrl+Shift+Enter*.
+
+2. Adicione um novo pedaço clicando no botão *Insert Chunk* na barra de ferramentas ou pressionando *Ctrl+Alt+I*.
+
+3. Para instalar um pacote utilize, por exemplo: install.packages("vcd")
+
+```{r}
+# Bibliotecas usadas para esta analise
+
+library(vcd)
+```
+
+```{r}
+############################################################################
+######################## TESTE DE HIPOTESES ################################
+################### PARA DIFERENCA DE DUAS MEDIAS ##########################
+############################################################################
+
+#Referencia: Anderson, et. al, Estatística Basica, 2010. Exercício 21 - Página. 411
+
+# Dados
+antes   <- c(5, 4, 7, 3, 5, 8, 5, 6)
+depois  <- c(6, 6, 7, 4, 3, 9, 7, 6)
+```
+
