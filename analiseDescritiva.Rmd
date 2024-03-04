@@ -28,54 +28,99 @@ library(vcd)
 
 ### Referencia: Anderson, et. al, Estatística Basica, 2010. Exercício 21 - Página. 411
 
-EX_21: Uma empresa de pesquisa de mercado usou uma amostra de indivíduos para avaliar o potencial de compra de determinado produto antes e depois de as pessoas virem um novo comercial de televisão a respeito do produto. As avaliações do potencial de compra basearam-se em uma escala de 0 a 10, e os valores mais altos indicavam maior potencial de compra. A hipótese nula declarava que a avaliação média depois seria igual a avaliação média antes. A rejeição dessa hipótese demonstraria que o comercial melhorou a avaliação do potencial médio de compra. Use  α = 0,05 e os dados apresentados abaixo para testar a hipótese e comentar o valor do comercial.
+**EX_21:** Uma empresa de pesquisa de mercado usou uma amostra de indivíduos para avaliar o potencial de compra de determinado produto antes e depois de as pessoas virem um novo comercial de televisão a respeito do produto. As avaliações do potencial de compra basearam-se em uma escala de 0 a 10, e os valores mais altos indicavam maior potencial de compra. A hipótese nula declarava que a avaliação média depois seria igual a avaliação média antes. A rejeição dessa hipótese demonstraria que o comercial melhorou a avaliação do potencial médio de compra. Use  α = 0,05 e os dados apresentados abaixo para testar a hipótese e comentar o valor do comercial.
 
+### Resolução utilizando "t.test"
 ```{r}
+t.test(antes,depois,paired = TRUE)
+```
 
-# Dados
+## Resolução Passo a Passo:
+
+### Notas antes e depois do comercial
+```{r}
 antes   <- c(5, 4, 7, 3, 5, 8, 5, 6)
 depois  <- c(6, 6, 7, 4, 3, 9, 7, 6)
 
 ```
 
+### Cálculos Iniciais
 ```{r}
+
+diferenca <- depois - antes
+diferenca
+n_amostra <- length(diferenca)
+
+significancia <- 0.05
+p_t_critico <- 1 - (significancia/2)
+
+gl <- n_amostra - 1
+gl
+
+media_diferenca <- mean(diferenca)
+var_dif <- var(diferenca)
+desvio_dif <- sd(diferenca)
+
 media_antes <- mean(antes)
-desv_antes <- sd(antes)
+var_antes <- var(antes)
+desvio_antes <- sd(antes)
 
 media_depois <- mean(depois)
-desv_depois <- sd(depois)
+var_depois <- var(depois)
+desvio_depois <- sd(depois)
 
-n_amostra <- length(antes)
-
-tabela <- data.frame(Exp = c("Antes","Depois"),Medias = c(media_antes,media_depois), Desvio_p = c(desv_antes,desv_depois))
+tabela <- data.frame(Exp = c("Antes","Depois", "diferenca"), Medias = c(media_antes,media_depois,media_diferenca), variancia = c(var_antes,var_depois,var_dif), Desvios = c(desvio_antes,desvio_depois,desvio_dif))
 tabela
 ```
 
-### Hipóteses
+### Passo 1 - Hipóteses
 
     * Ho: media_antes = media_depois
-    * Ha: media_antes <> media_depois
+    * Ha: media_antes < media_depois
 
-    Ho: As avaliações médias antes e depois do comercial são iguais;
-    Ha: As avaliações antes e depois do comercial são diferentes.
+    ou
 
-### Estatística Teste
-    * Variância populacional desconhecida
+    * Ho: media_diferenca = 0
+    * Ha: media_diferenca > 0
+
+### Resultados possíveis
+
+    * Ho: As avaliações médias antes e depois do comercial são iguais;
+    * Ha: As avaliações antes e depois do comercial são diferentes, sendo maior a media das avaliações após a circulação do comercial.
+
+### Passo 2 - Estatística Teste
+
 ```{r}
 
-Fcal <- (desv_antes)^2/(desv_depois)^2
-Fcal
+to <- media_diferenca / (desvio_dif/sqrt(n_amostra))
+to
+```
+
+### Passo 3 - Definir a Região Crítica e p_valor
+
+* Região crítica
+```{r}
+t_critico <- qt(p_t_critico,df = gl,lower.tail = TRUE)
+t_critico
+```
+
+* p_valor
+```{r}
+p_teste <- pt(q = to,df = gl,lower.tail = TRUE)
+
+p_valor <- 1*p_teste
+p_valor
 
 ```
 
+### Passo 4 - Comparação
 
+**Como o p_valor > alfa (0,05), não rejeitamos a hipótese Ho;**
+**Como to = 1,357 não pertence a região crítica, não rejeitamos Ho.**
 
+### Passo 5 - Conclusão
 
-
-
-
-
-
+**As médias de avaliação de um determinando produto antes e depois da circulação do comercial são iguais, ao nível de 5% de significancia.**
 
 ___________________
 ## Exercício 2
