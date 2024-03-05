@@ -1,6 +1,8 @@
 ---
 title: "Exercícios de Testes de Hipóteses para a disciplina de Estatística II"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 O propósito deste trabalho é resolver alguns exercícios de Testes de Hipóteses propostos pela disciplina de Estatística II do curso de graduação em Estatística da Universidade Estatual de Maringá.
 
@@ -13,38 +15,34 @@ Instruções para o uso do R Notebook:
 3. Para instalar um pacote utilize, por exemplo: install.packages("vcd")
 
 
-### Bibliotecas usadas para esta analise
-```{r}
+#### Bibliotecas usadas
+```{r message=FALSE, warning=FALSE}
 library(summarytools)
 library(vcd)
 ```
+_________________
+### TESTE DE HIPOTESES PARA DIFERENÇA DE DUAS MÉDIAS 
 
-############################################################################
-######################## TESTE DE HIPOTESES ################################
-################### PARA DIFERENCA DE DUAS MEDIAS ##########################
-############################################################################
-
-## Exercício 1
-
-### Referencia: Anderson, et. al, Estatística Basica, 2010. Exercício 21 - Página. 411
+### Exercício 1
 
 **EX_21:** Uma empresa de pesquisa de mercado usou uma amostra de indivíduos para avaliar o potencial de compra de determinado produto antes e depois de as pessoas virem um novo comercial de televisão a respeito do produto. As avaliações do potencial de compra basearam-se em uma escala de 0 a 10, e os valores mais altos indicavam maior potencial de compra. A hipótese nula declarava que a avaliação média depois seria igual a avaliação média antes. A rejeição dessa hipótese demonstraria que o comercial melhorou a avaliação do potencial médio de compra. Use  α = 0,05 e os dados apresentados abaixo para testar a hipótese e comentar o valor do comercial.
 
+*Referencia: Anderson, et. al, Estatística Basica, 2010. Exercício 21 - Página. 411*
 
-### Notas antes e depois do comercial
+#### Notas antes e depois do comercial
 ```{r}
 antes   <- c(5, 4, 7, 3, 5, 8, 5, 6)
 depois  <- c(6, 6, 7, 4, 3, 9, 7, 6)
 ```
 
-## Resolução utilizando "t.test"
+### Resolução 1. utilizando "t.test"
 ```{r}
 t.test(antes,depois,paired = TRUE)
 ```
 
-## Resolução Passo a Passo:
+### Resolução 2. Passo a Passo:
 
-### Cálculos Iniciais
+#### Cálculos Iniciais
 ```{r}
 
 diferenca <- depois - antes
@@ -90,7 +88,7 @@ tabela
     * Ho: media_diferenca = 0
     * Ha: media_diferenca > 0
 
-### Resultados possíveis
+#### Resultados possíveis
 
     * Ho: As avaliações médias antes e depois do comercial são iguais;
     * Ha: As avaliações antes e depois do comercial são diferentes, sendo maior a media das avaliações após a circulação do comercial.
