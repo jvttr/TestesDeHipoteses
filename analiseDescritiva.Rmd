@@ -130,6 +130,6 @@ ii) Como t_teste = 1,357 não pertence a região crítica, não rejeitamos Ho.
 As médias de avaliação de um determinando produto antes e depois da circulação do comercial são iguais, ao nível de 5% de significancia.
 
 ___________________
-## Exercício 2
+### Exercício 2
 
-### Referência: Bussab & Morettin - Página 372 - Exercício 9
+*Referência: Bussab & Morettin - Página 372 - Exercício 9*
