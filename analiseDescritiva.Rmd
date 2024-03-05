@@ -121,12 +121,13 @@ p_valor
 
 ### Passo 4 - Comparação
 
-**Como o p_valor > alfa (0,05), não rejeitamos a hipótese Ho;**
-**Como t_teste = 1,357 não pertence a região crítica, não rejeitamos Ho.**
+i) Como o p_valor > alfa (0,05), não rejeitamos a hipótese Ho;
+
+ii) Como t_teste = 1,357 não pertence a região crítica, não rejeitamos Ho.
 
 ### Passo 5 - Conclusão
 
-**As médias de avaliação de um determinando produto antes e depois da circulação do comercial são iguais, ao nível de 5% de significancia.**
+As médias de avaliação de um determinando produto antes e depois da circulação do comercial são iguais, ao nível de 5% de significancia.
 
 ___________________
 ## Exercício 2
