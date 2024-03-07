@@ -133,3 +133,29 @@ ___________________
 ### Exercício 2
 
 *Referência: Bussab & Morettin - Página 372 - Exercício 9*
+
+<img src="exercicio_9_Morettin.png" width="900" height="300">
+
+
+9. Para investigar a influência da opção profissional sobre o salário inicial de recém-forma-
+dos, investigaram-se dois grupos de profissionais: um de liberais em geral e outro de
+formados em Administração de Empresas. Com os resultados abaixo, expressos em salários
+mínimos, quais seriam suas conclusões?
+
+```{r}
+liberais  <- c(6.6, 10.3, 10.8, 12.9, 9.2, 12.3, 7.0)
+administradores  <- c(8.1, 9.8, 8.7, 10.0, 10.2, 8.2, 8.7, 10.1)
+```
+
+
+```{r}
+mediaLiberais <- mean(liberais)
+mediaAdministradores <- mean(administradores)
+
+desvio_liberais <- sd(liberais)
+desvio_adm <- sd(administradores)
+
+estatisticaTeste <- (mediaLiberais - mediaAdministradores)/(sqrt(n))
+
+```
+
