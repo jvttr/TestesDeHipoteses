@@ -144,18 +144,18 @@ mínimos, quais seriam suas conclusões?
 
 ```{r}
 liberais  <- c(6.6, 10.3, 10.8, 12.9, 9.2, 12.3, 7.0)
-administradores  <- c(8.1, 9.8, 8.7, 10.0, 10.2, 8.2, 8.7, 10.1)
+adm  <- c(8.1, 9.8, 8.7, 10.0, 10.2, 8.2, 8.7, 10.1)
 ```
 
 
 ```{r}
 mediaLiberais <- mean(liberais)
-mediaAdministradores <- mean(administradores)
+mediaAdm <- mean(adm)
 
 desvio_liberais <- sd(liberais)
-desvio_adm <- sd(administradores)
+desvio_adm <- sd(adm)
 
-estatisticaTeste <- (mediaLiberais - mediaAdministradores)/(sqrt(n))
+estatisticaTeste <- (mediaLiberais - mediaAdm)/(sqrt(n))
 
 ```
 

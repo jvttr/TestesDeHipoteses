@@ -1791,14 +1791,14 @@ Administração de Empresas. Com os resultados abaixo, expressos em
 salários mínimos, quais seriam suas conclusões?</li>
 </ol>
 <pre class="r"><code>liberais  &lt;- c(6.6, 10.3, 10.8, 12.9, 9.2, 12.3, 7.0)
-administradores  &lt;- c(8.1, 9.8, 8.7, 10.0, 10.2, 8.2, 8.7, 10.1)</code></pre>
+adm  &lt;- c(8.1, 9.8, 8.7, 10.0, 10.2, 8.2, 8.7, 10.1)</code></pre>
 <pre class="r"><code>mediaLiberais &lt;- mean(liberais)
-mediaAdministradores &lt;- mean(administradores)
+mediaAdm &lt;- mean(adm)
 
 desvio_liberais &lt;- sd(liberais)
-desvio_adm &lt;- sd(administradores)
+desvio_adm &lt;- sd(adm)
 
-estatisticaTeste &lt;- (mediaLiberais - mediaAdministradores)/(sqrt(n))</code></pre>
+estatisticaTeste &lt;- (mediaLiberais - mediaAdm)/(sqrt(n))</code></pre>
 </div>
 
 
