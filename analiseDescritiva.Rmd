@@ -185,7 +185,7 @@ f_cal <- desvio_liberais/desvio_adm
 f_cal
 
 ```
-### Passo 3 - Definir a Região Crítica e p_valor
+### Passo 3 - Definir a Região Crítica
 
 * Região crítica
 
