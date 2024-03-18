@@ -1681,6 +1681,10 @@ depois  &lt;- c(6, 6, 7, 4, 3, 9, 7, 6)</code></pre>
 ## sample estimates:
 ## mean difference 
 ##          -0.625</code></pre>
+<p>Como o p_valor &gt; 0,05, não se rejeita a hipótese H0, ou seja, ao
+nível de 5% de significância, as médias de avaliação de um determinando
+produto antes e depois da circulação do comercial são iguais.</p>
+<hr />
 </div>
 <div id="resolução-2.-passo-a-passo" class="section level3">
 <h3>Resolução 2. Passo a Passo:</h3>
@@ -1787,26 +1791,25 @@ NORMAIS COM VARIÂNCIAS DESCONHECIDAS</h4>
 <p><em>Referência: Bussab &amp; Morettin - Página 372 - Exercício
 9</em></p>
 <pre class="r"><code>liberais  &lt;- c(6.6, 10.3, 10.8, 12.9, 9.2, 12.3, 7.0)
-adm  &lt;- c(8.1, 9.8, 8.7, 10.0, 10.2, 8.2, 8.7, 10.1)</code></pre>
+adm  &lt;- c(8.1, 9.8, 8.7, 10.0, 10.2, 8.2, 8.7, 10.1)
+
+significancia &lt;- 0.05</code></pre>
 <pre class="r"><code>n_liberais &lt;- length(liberais)
-n_liberais</code></pre>
-<pre><code>## [1] 7</code></pre>
-<pre class="r"><code>n_adm &lt;- length(adm)
-n_adm</code></pre>
-<pre><code>## [1] 8</code></pre>
-<pre class="r"><code>mediaLiberais &lt;- mean(liberais)
+
+n_adm &lt;- length(adm)
+
+mediaLiberais &lt;- mean(liberais)
+
 mediaAdm &lt;- mean(adm)
 
 desvio_liberais &lt;- sd(liberais)
+
 desvio_adm &lt;- sd(adm)
 
 var_liberais &lt;- var(liberais)
-var_liberais</code></pre>
-<pre><code>## [1] 5.919048</code></pre>
-<pre class="r"><code>var_adm &lt;- var(adm)
-var_adm</code></pre>
-<pre><code>## [1] 0.7878571</code></pre>
-<pre class="r"><code>estatisticaTeste &lt;- (mediaLiberais - mediaAdm)/(sqrt(n))
+
+var_adm &lt;- var(adm)
+
 
 tabela &lt;- data.frame(informacoes=c(&quot;amostra&quot;,&quot;media&quot;,&quot;desvio_p&quot;,&quot;variancia&quot;), liberais = c(n_liberais,mediaLiberais,desvio_liberais,var_liberais), adm = c(n_adm, mediaAdm, desvio_adm,var_adm))
 tabela</code></pre>
@@ -1860,6 +1863,61 @@ médias.</p>
 </div>
 <div id="teste-de-hipóteses" class="section level2">
 <h2>Teste de Hipóteses</h2>
+<div id="passo-1---hipóteses-1" class="section level3">
+<h3>Passo 1 - Hipóteses</h3>
+<pre><code>* Ho: media_adm = media_liberais
+* Ha: media_adm &lt;&gt; media_liberais</code></pre>
+<div id="resultados-possíveis-2" class="section level4">
+<h4>Resultados possíveis</h4>
+<pre><code>* Ho: As avaliações médias antes e depois do comercial são iguais;
+* Ha: As avaliações antes e depois do comercial são diferentes.</code></pre>
+</div>
+</div>
+<div id="passo-2---estatística-teste-2" class="section level3">
+<h3>Passo 2 - Estatística Teste</h3>
+<pre class="r"><code>sp &lt;- sqrt(((n_adm-1)*var_adm) + ((n_liberais-1)*var_liberais))/(n_adm+n_liberais-2)
+
+t_teste &lt;- (mediaAdm - mediaLiberais)/sp*((1/n_adm)+(1/n_liberais))
+t_teste</code></pre>
+<pre><code>## [1] -0.3514149</code></pre>
+</div>
+<div id="passo-3---definir-a-região-crítica-e-p_valor-1" class="section level3">
+<h3>Passo 3 - Definir a Região Crítica e p_valor</h3>
+<ul>
+<li>Região crítica</li>
+</ul>
+<pre class="r"><code>razao_sn_adm &lt;- var_adm/n_adm
+razao_sn_liberais &lt;- var_liberais/n_liberais
+
+gl &lt;- ((razao_sn_adm + razao_sn_liberais)^2) /(((razao_sn_adm^2)/(n_adm-1)) + ((razao_sn_liberais^2)/(n_liberais-1)))
+gl</code></pre>
+<pre><code>## [1] 7.393037</code></pre>
+<pre class="r"><code>t_critico &lt;- qt(significancia/2,df = gl,lower.tail = TRUE)
+t_critico</code></pre>
+<pre><code>## [1] -2.339377</code></pre>
+<ul>
+<li>p_valor</li>
+</ul>
+<pre class="r"><code>p_teste &lt;- pt(q = t_teste,df = gl,lower.tail = TRUE)
+
+p_valor &lt;- 1*p_teste
+p_valor</code></pre>
+<pre><code>## [1] 0.3675402</code></pre>
+</div>
+<div id="passo-4---comparação-1" class="section level3">
+<h3>Passo 4 - Comparação</h3>
+<ol style="list-style-type: lower-roman">
+<li><p>Como o p_valor &gt; alfa (0,05), não rejeitamos a hipótese
+Ho;</p></li>
+<li><p>Como t_teste = -1,879 não pertence a região crítica, não
+rejeitamos Ho.</p></li>
+</ol>
+</div>
+<div id="passo-5---conclusão-1" class="section level3">
+<h3>Passo 5 - Conclusão</h3>
+<p>As médias de salários iniciais de recém-formados liberais e
+administradores são iguais, ao nível de 5% de significância.</p>
+</div>
 </div>
 
 

@@ -28,6 +28,7 @@ _________________
 
 *Referencia: Anderson, et. al, Estatística Basica, 2010. Exercício 21 - Página. 411*
 
+
 #### Notas antes e depois do comercial
 ```{r}
 antes   <- c(5, 4, 7, 3, 5, 8, 5, 6)
@@ -38,7 +39,9 @@ depois  <- c(6, 6, 7, 4, 3, 9, 7, 6)
 ```{r}
 t.test(antes,depois,paired = TRUE)
 ```
+Como o p_valor > 0,05, não se rejeita a hipótese H0, ou seja, ao nível de 5% de significância, as médias de avaliação de um determinando produto antes e depois da circulação do comercial são iguais.
 
+_______________
 ### Resolução 2. Passo a Passo:
 
 #### Cálculos Iniciais
@@ -140,27 +143,28 @@ ___________________
 ```{r}
 liberais  <- c(6.6, 10.3, 10.8, 12.9, 9.2, 12.3, 7.0)
 adm  <- c(8.1, 9.8, 8.7, 10.0, 10.2, 8.2, 8.7, 10.1)
+
+significancia <- 0.05
 ```
 
 
 ```{r}
 n_liberais <- length(liberais)
-n_liberais
+
 n_adm <- length(adm)
-n_adm
 
 mediaLiberais <- mean(liberais)
+
 mediaAdm <- mean(adm)
 
 desvio_liberais <- sd(liberais)
+
 desvio_adm <- sd(adm)
 
 var_liberais <- var(liberais)
-var_liberais
-var_adm <- var(adm)
-var_adm
 
-estatisticaTeste <- (mediaLiberais - mediaAdm)/(sqrt(n))
+var_adm <- var(adm)
+
 
 tabela <- data.frame(informacoes=c("amostra","media","desvio_p","variancia"), liberais = c(n_liberais,mediaLiberais,desvio_liberais,var_liberais), adm = c(n_adm, mediaAdm, desvio_adm,var_adm))
 tabela
@@ -210,12 +214,58 @@ Assim, seguimos com o teste de hipóteses para a diferença de médias.
 ___________
 ## Teste de Hipóteses
 
+### Passo 1 - Hipóteses
 
+    * Ho: media_adm = media_liberais
+    * Ha: media_adm <> media_liberais
+    
+#### Resultados possíveis
 
+    * Ho: As avaliações médias antes e depois do comercial são iguais;
+    * Ha: As avaliações antes e depois do comercial são diferentes.
+    
+### Passo 2 - Estatística Teste
 
+```{r}
+sp <- sqrt(((n_adm-1)*var_adm) + ((n_liberais-1)*var_liberais))/(n_adm+n_liberais-2)
 
+t_teste <- (mediaAdm - mediaLiberais)/sp*((1/n_adm)+(1/n_liberais))
+t_teste
+```
 
+### Passo 3 - Definir a Região Crítica e p_valor
 
+* Região crítica
+```{r}
+razao_sn_adm <- var_adm/n_adm
+razao_sn_liberais <- var_liberais/n_liberais
+
+gl <- ((razao_sn_adm + razao_sn_liberais)^2) /(((razao_sn_adm^2)/(n_adm-1)) + ((razao_sn_liberais^2)/(n_liberais-1)))
+gl
+
+t_critico <- qt(significancia/2,df = gl,lower.tail = TRUE)
+t_critico
+
+```
+
+* p_valor
+```{r}
+p_teste <- pt(q = t_teste,df = gl,lower.tail = TRUE)
+
+p_valor <- 1*p_teste
+p_valor
+
+```
+
+### Passo 4 - Comparação
+
+i) Como o p_valor > alfa (0,05), não rejeitamos a hipótese Ho;
+
+ii) Como t_teste = -1,879 não pertence a região crítica, não rejeitamos Ho.
+
+### Passo 5 - Conclusão
+
+As médias de salários iniciais de recém-formados liberais e administradores são iguais, ao nível de 5% de significância.
 
 
 
