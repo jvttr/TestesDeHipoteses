@@ -131,8 +131,8 @@ ii) Como t_teste = 1,357 não pertence a região crítica, não rejeitamos Ho.
 ### Passo 5 - Conclusão
 
 As médias de avaliação de um determinando produto antes e depois da circulação do comercial são iguais, ao nível de 5% de significancia.
-
-___________________
+_________________________
+_________________________
 ### Exercício 2
 #### TESTE DE HIPOTESES PARA DIFERENÇA DE DUAS MÉDIAS DE POPULAÇÕES NORMAIS COM VARIÂNCIAS DESCONHECIDAS
 
@@ -266,6 +266,225 @@ ii) Como t_teste = -1,879 não pertence a região crítica, não rejeitamos Ho.
 ### Passo 5 - Conclusão
 
 As médias de salários iniciais de recém-formados liberais e administradores são iguais, ao nível de 5% de significância.
+
+_________________________
+_________________________
+
+*EX_19:* Uma amostra de 200 habitantes de uma cidade foi escolhida para declarar sua opinião sobre um certo projeto governamental. O resultado foi o seguinte:.
+
+<img src="ex_3_qui_quadrado.jpg" width="900" height="200">
+
+Referencia: Bussab & Morettin 2013. Exercício 19 - Página. 94
+
+```{r}
+opiniao  <- c("aFavor", "contra")
+urbano  <- c(30, 60)
+suburbano  <- c(35, 25)
+rural  <- c(35, 15)
+significancia <- 0.05
+```
+
+
+```{r}
+df = data.frame(opiniao, urbano, suburbano,rural)
+df
+
+df[3,-1] <- df[1,-1] + df[2,-1] 
+df
+df[3,1] <- "Total_y"
+
+df
+
+
+df[,5] <- df[,2]+df[,3] + df[,4]
+df
+
+```
+### 1 Hipóteses
+
+
+### 2 Estatística Teste
+  * Frequência esperada
+```{r}
+df
+m_eij <- matrix(1:6, nrow = 2, ncol = 3)
+m_eij
+for (linha in 1:2) {
+  for (coluna in 1:3) {
+    m_eij[linha,coluna] <- (df[linha,5] * df[3,coluna + 1])/df[3,5]
+    
+  }
+  
+}
+m_eij
+
+```
+  * Qui_quadrado calculado
+```{r}
+soma <- 0
+for (linha in 1:2) {
+  for (coluna in 1:3) {
+    x_cal <- ((df[linha,coluna + 1] - m_eij[linha,coluna])^2)/m_eij[linha,coluna]
+    soma <- soma + x_cal
+  }
+  
+}
+x_cal <- soma  
+```
+
+### Grau de liberdade e signific
+```{r}
+gl <- (2-1) * (3 - 1)
+
+#chisq.test(df[,-1])
+```
+
+* Encontrar p_valor pela tabela
+
+Encontramos o valor de qui_quadrado calculado (19,667), referente ao grau liberdade gl=2. O p_valor encontrado foi:
+  
+  p_valor < 0,001.
+  
+### 3 Comparação
+  
+  Como p_valor < significania (alfa = 0,05), Rejeita-se H0;
+  
+### Conclusão
+
+  Ao nível de 5% de significancia, 
+
+_______________________
+_______________________
+
+**4) Análise de regressão: livro Bussab & Morettin (2013), página 94,exercício_19;**
+
+opiniao:
+  * aFavor = 0;
+  * Contra = 1.
+
+```{r}
+opiniao_bin <- c(0,1)
+df[,1] <- opiniao_bin
+df
+```
+
+#### Separar as categorías em um coluna
+```{r}
+opiniao <- rep(c(0,1),c(3,3))
+opiniao
+
+regiao <- c(rep(c("U","S","R"),c(1,1,1)),rep(c("U","S","R"),c(1,1,1)))
+regiao
+
+
+contagem <- c(30,35,35,60,25,15)
+contagem
+
+
+#regiao <- c(rep(c("urbano","suburbano", "rural"),c(30,35,35)), rep(c("urbano","suburbano", "rural"),c(60,25,15)))
+
+regiao
+```
+
+#### Gerar o data.frame
+```{r}
+dados <- data.frame(opiniao, regiao, contagem)
+dados
+
+table(dados)
+```
+
+```{r}
+
+modelo <- glm(opiniao ~ regiao + contagem, dados, family = binomial)
+
+par(mfrow = c(2,2))
+plot(modelo)
+
+par(mfrow = c(1,1))
+hnp::hnp(modelo$residuals)
+```
+
+### Coeficientes
+
+```{r}
+modelo$coefficients
+
+```
+___________________
+___________________
+
+**17. Os dados a seguir são de um experimento desenvolvido para investigar a percepção de valores éticos corporativos entre pessoas especializadas em marketing (notas mais altas indicam valores éticos mais elevados).** 
+
+*livro Anderson, et al. (2021), página 501, exercício 17.*
+
+<img src="ex_5.jpg" width="900" height="200">
+
+```{r}
+
+df <- data.frame(gerente=c(6,5,4,5,6,4), pesquisa = c(5,5,4,4,5,4), publicidade = c(6,7,6,5,6,6))
+df
+```
+### Estatística
+
+```{r}
+
+media <- sapply(df, mean)
+media
+
+desvio_amostra <- sapply(df,sd)
+desvio_amostra
+
+variancia_amostra <- sapply(df, var)
+variancia_amostra
+```
+## Teste de Hipótese para Homogeneidade de Variâncias
+
+## 1. Entre Gerente e Pesquisa
+
+### Hipóteses
+
+---
+
+### Estatística Teste
+
+```{r}
+f_cal <- variancia_amostra[1]/variancia_amostra[2]
+f_cal
+```
+### Região crítica
+```{r}
+f1 <- qf(0.025,5,5,lower.tail = FALSE)
+f0 <- 1/f1
+f0
+
+
+intervalo_critico <- c(f0,f1)
+intervalo_critico
+```
+### Conclusão
+
+Como fcal =2,667 não pertence a região crítica, não rejeitamos a H0, ao nível de 5% de significância, logo as variâncias são desconhecidas e **iguais**.
+
+## 1. Entre Gerente e Publicidade
+
+### Hipóteses
+
+---
+
+### Estatística Teste
+
+```{r}
+f_cal <- variancia_amostra[1]/ variancia_amostra[3]
+f_cal
+```
+### Anova
+```{r}
+```
+### Conclusão
+
+Como fcal =2,667 não pertence a região crítica, não rejeitamos a H0, ao nível de 5% de significância, logo as variâncias são desconhecidas e **iguais**.
+
 
 
 
